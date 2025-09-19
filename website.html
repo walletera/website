@@ -20,65 +20,87 @@
             justify-content: center;
         }
         .container {
-            max-width: 420px;
-            padding: 2em 1.5em;
-            border-radius: 10px;
+            max-width: 520px;
+            padding: 3em 1.5em;
+            border-radius: 16px;
             background: #fafafa;
-            box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
             text-align: center;
         }
         h1 {
-            font-size: 2em;
-            font-weight: 600;
-            margin-bottom: 0.3em;
-            letter-spacing: -1px;
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+            letter-spacing: -1.5px;
         }
         p {
-            font-size: 1.15em;
-            color: #666;
-            margin-bottom: 2em;
+            font-size: 1.45em;
+            color: #555;
+            margin-bottom: 2.4em;
         }
         .links {
             display: flex;
             flex-direction: column;
-            gap: 1em;
+            align-items: center;
+            gap: 1.4em;
+            width: 100%;
         }
-        .button-link {
+        .plain-link {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 1em;
+            color: #222;
+            font-weight: 600;
+            font-size: 1.23em;
+            text-decoration: none;
+            transition: color 0.17s;
+            width: 100%;
+            max-width: 410px;
+        }
+        .plain-link:hover {
+            color: #1281ff;
+        }
+        .icon-wrap {
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
-            justify-content: start;
-            color: #fff;
-            background: #1281ff;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.75em 1.25em;
-            border-radius: 6px;
-            border: none;
-            transition: background 0.18s;
-            font-size: 1em;
-            box-shadow: 0 2px 8px rgba(18, 129, 255, 0.06);
-            gap: 0.7em;
-        }
-        .button-link svg {
+            justify-content: center;
             flex-shrink: 0;
-            width: 22px;
-            height: 22px;
+        }
+        .plain-link svg {
+            width: 38px;
+            height: 38px;
             display: block;
         }
-        .button-link:hover {
-            background: #0059ba;
+        .link-text {
+            text-align: left;
+            line-height: 1.32;
         }
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
             .container {
-                max-width: 96vw;
+                max-width: 98vw;
                 padding: 1.2em 0.4em;
             }
-            .links {
-                gap: 0.7em;
+            h1 {
+                font-size: 2em;
             }
-            .button-link {
-                font-size: 0.97em;
-                padding: 0.63em 0.85em;
+            p,
+            .plain-link {
+                font-size: 1.02em;
+            }
+            .icon-wrap {
+                width: 30px;
+                height: 30px;
+            }
+            .plain-link svg {
+                width: 22px;
+                height: 22px;
+            }
+            .plain-link {
+                max-width: 99vw;
             }
         }
     </style>
@@ -90,27 +112,31 @@
         Welcome to Walletera, the open-source Payment As A Service Platform.
     </p>
     <div class="links">
-        <a class="button-link" href="https://github.com/walletera" target="_blank">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path fill="#fff" d="M12 0C5.37 0 0 5.43 0 12.13c0 5.37 3.41 9.92 8.17 11.53.6.13.81-.26.81-.58v-2.2c-3.32.73-4-1.61-4-1.61-.54-1.41-1.33-1.79-1.33-1.79-1.09-.76.08-.75.08-.75 1.21.09 1.85 1.26 1.85 1.26 1.07 1.86 2.8 1.32 3.49 1.01.11-.78.42-1.32.77-1.62-2.65-.31-5.44-1.36-5.44-6.07 0-1.34.47-2.45 1.24-3.31-.13-.32-.54-1.6.12-3.35 0 0 1-.33 3.3 1.25A11.2 11.2 0 0112 6.89c1.01.01 2.03.14 2.98.34 2.29-1.58 3.29-1.25 3.29-1.25.66 1.75.25 3.03.12 3.35.77.86 1.24 1.97 1.24 3.31 0 4.72-2.8 5.75-5.45 6.06.43.38.82 1.12.82 2.25v3.34c0 .32.21.71.81.58C20.59 22.05 24 17.5 24 12.13 24 5.43 18.63 0 12 0z"/>
-            </svg>
-            Walletera GitHub Page
+        <a class="plain-link" href="https://github.com/walletera" target="_blank">
+            <span class="icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path fill="#181717" d="M12 0C5.37 0 0 5.43 0 12.13c0 5.37 3.41 9.92 8.17 11.53.6.13.81-.26.81-.58v-2.2c-3.32.73-4-1.61-4-1.61-.54-1.41-1.33-1.79-1.33-1.79-1.09-.76.08-.75.08-.75 1.21.09 1.85 1.26 1.85 1.26 1.07 1.86 2.8 1.32 3.49 1.01.11-.78.42-1.32.77-1.62-2.65-.31-5.44-1.36-5.44-6.07 0-1.34.47-2.45 1.24-3.31-.13-.32-.54-1.6.12-3.35 0 0 1-.33 3.3 1.25A11.2 11.2 0 0112 6.89c1.01.01 2.03.14 2.98.34 2.29-1.58 3.29-1.25 3.29-1.25.66 1.75.25 3.03.12 3.35.77.86 1.24 1.97 1.24 3.31 0 4.72-2.8 5.75-5.45 6.06.43.38.82 1.12.82 2.25v3.34c0 .32.21.71.81.58C20.59 22.05 24 17.5 24 12.13 24 5.43 18.63 0 12 0z"/>
+                </svg>
+            </span>
+            <span class="link-text">Walletera GitHub Page</span>
         </a>
-        <a class="button-link" href="https://walletera.dev/series/walletera" target="_blank">
-            <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                <circle cx="16" cy="16" r="16" fill="#2962FF"/>
-                <rect x="8" y="10" width="16" height="3.2" rx="1.2" fill="#fff"/>
-                <rect x="8" y="16" width="16" height="3.2" rx="1.2" fill="#fff"/>
-                <rect x="8" y="22" width="8.4" height="3.2" rx="1.2" fill="#fff"/>
-            </svg>
-            Walletera Series &amp; Blog
+        <a class="plain-link" href="https://walletera.dev/series/walletera" target="_blank">
+            <span class="icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <rect width="32" height="32" rx="7" fill="#2962FF"/>
+                    <path d="M17.653 15.019c-.576-.672-1.696-.672-2.27 0l-1.559 1.819c-.287.336-.287.88 0 1.216l1.559 1.819c.574.672 1.694.672 2.27 0l1.561-1.819c.285-.336.285-.88 0-1.216l-1.561-1.819ZM16.1 23.254c-1.604 0-3.16-.688-4.225-1.846-.344-.373-.344-.98 0-1.352l1.406-1.615c.344-.397.932-.397 1.277 0 .807.932 2.083.932 2.889 0 .346-.397.934-.397 1.278 0l1.406 1.615c.344.372.344.979 0 1.352-1.064 1.158-2.62 1.846-4.224 1.846ZM14.347 16.981c.574.672 1.694.672 2.27 0l1.559-1.819c.287-.336.287-.88 0-1.216l-1.559-1.819c-.576-.672-1.696-.672-2.27 0l-1.561 1.819c-.285.336-.285.88 0 1.216l1.561 1.819ZM16.1 8.746c1.604 0 3.16.688 4.225 1.846.344.373.344.98 0 1.352l-1.406 1.615c-.344.397-.932.397-1.278 0-.806-.932-2.082-.932-2.889 0-.344.397-.932.397-1.277 0l-1.406-1.615c-.344-.372-.344-.979 0-1.352C12.94 9.434 14.496 8.746 16.1 8.746Z" fill="#fff"/>
+                </svg>
+            </span>
+            <span class="link-text">Walletera Blog</span>
         </a>
-        <a class="button-link" href="https://www.linkedin.com/in/federico-moya/" target="_blank">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect width="24" height="24" rx="4" fill="#0A66C2"/>
-                <path d="M7.04 8.8c.6 0 1.07-.48 1.07-1.08a1.08 1.08 0 1 0-2.15 0c0 .6.48 1.08 1.08 1.08zM8.25 10.36H5.82v7.32h2.43v-7.32zM13.88 10.23c-1.11 0-1.63.85-1.91 1.44v-1.31h-2.43v7.32h2.43v-4.11c0-1.08.36-1.8 1.26-1.8.95 0 1.06.9 1.06 1.86v4.05h2.43v-4.45c0-2.13-1.13-3.1-2.84-3.1z" fill="#fff"/>
-            </svg>
-            Contact (LinkedIn/Federico Moya)
+        <a class="plain-link" href="https://www.linkedin.com/in/federico-moya/" target="_blank">
+            <span class="icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+                    <path d="M7.04 8.8c.6 0 1.07-.48 1.07-1.08a1.08 1.08 0 1 0-2.15 0c0 .6.48 1.08 1.08 1.08zM8.25 10.36H5.82v7.32h2.43v-7.32zM13.88 10.23c-1.11 0-1.63.85-1.91 1.44v-1.31h-2.43v7.32h2.43v-4.11c0-1.08.36-1.8 1.26-1.8.95 0 1.06.9 1.06 1.86v4.05h2.43v-4.45c0-2.13-1.13-3.1-2.84-3.1z" fill="#fff"/>
+                </svg>
+            </span>
+            <span class="link-text">Follow me on LinkedIn for project updates</span>
         </a>
     </div>
 </div>
