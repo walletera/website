@@ -1,0 +1,114 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { register, ApiError } from "../lib/api";
+import { parseBarongError } from "../lib/barong-errors";
+
+export default function RegisterPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+    try {
+      await register(email, password, username || undefined);
+      router.push("/demo/login?from=register");
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(
+          parseBarongError(err.body) ??
+            (err.status === 422
+              ? "Validation failed. Check your inputs and try again."
+              : "Registration failed. Please try again.")
+        );
+      } else {
+        setError("Could not reach the demo API. Check the base URL.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="w-full max-w-md py-16">
+      <div className="mb-8">
+        <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50 mb-1">
+          Create an account
+        </h1>
+        <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          Already have one?{" "}
+          <Link href="/demo/login" className="text-violet-600 dark:text-violet-400 hover:underline">
+            Log in
+          </Link>
+        </p>
+      </div>
+
+      <div className="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 p-8 shadow-sm">
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1.5">
+              Email <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent placeholder-neutral-400"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1.5">
+              Password <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent placeholder-neutral-400"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1.5">
+              Username <span className="text-neutral-400">(optional)</span>
+            </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="johndoe"
+              className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent placeholder-neutral-400"
+            />
+          </div>
+
+          {error && (
+            <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg px-3 py-2">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-medium hover:bg-neutral-700 dark:hover:bg-neutral-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Creating account…" : "Create account"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}

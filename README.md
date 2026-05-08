@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Walletera Website
 
-## Getting Started
+Marketing and interactive demo website for the [Walletera](https://github.com/walletera) Payments-as-a-Service platform.
 
-First, run the development server:
+Built with **Next.js 16**, React 19, Tailwind CSS 4, and TypeScript.
+
+## Local Development
+
+### Prerequisites
+
+- Node.js 20+
+- The `local-testing` stack running with nginx (see below)
+
+### Why nginx is required
+
+The demo playground signs requests with HMAC-SHA256 using `crypto.subtle`, which is only available in [secure contexts](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts). The nginx service in `local-testing` terminates TLS for `walletera.local` and proxies both the website (port 3000) and the API (Envoy, port 3099) under the same HTTPS origin — this satisfies the secure context requirement and eliminates CORS entirely.
+
+### Setup
+
+**1. Start the backend stack** (from the repo root):
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd local-testing
+docker compose up -d
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**2. Generate a TLS certificate for `walletera.local`** (once):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+mkcert -install                                    # install local CA (once per machine)
+cd local-testing/nginx/certs
+mkcert walletera.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**3. Restart nginx** to pick up the cert:
 
-## Learn More
+```bash
+cd local-testing
+docker compose restart nginx
+```
 
-To learn more about Next.js, take a look at the following resources:
+**4. Start the dev server:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**5. Open `https://walletera.local`** — not `localhost:3000`.
 
-## Deploy on Vercel
+### Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Variable | Default | Description |
+|---|---|---|
+| `NEXT_PUBLIC_DEMO_API_URL` | `""` | Base URL for demo API calls. Empty string = same-origin (correct when using nginx). Set to `http://walletera.local:3099` only for direct Envoy access without nginx. |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Demo Section
+
+The `/demo` route guides visitors through the full Walletera onboarding and lets them interact with live payments:
+
+1. **Register** — creates a Barong account
+2. **Login** — establishes a session (cookie + CSRF token)
+3. **2FA** — scans a QR code and confirms TOTP
+4. **API Keys** — generates an HS256 API key
+5. **Playground** — creates and queries DinoPay outbound payments using HMAC auth
+
+All API calls are **client-side** (browser → nginx → Envoy → services). The Next.js server is not a proxy.
+
+See `DEMO_PLAN.md` for the full specification including endpoint details and request/response shapes.
+
+## Project Structure
+
+```
+app/
+├── components/        # Landing page sections (Hero, WhatIs, Capabilities, …)
+├── demo/
+│   ├── lib/
+│   │   ├── api.ts         # All fetch calls; throws ApiError on non-2xx
+│   │   ├── barong-errors.ts  # Maps Barong error codes to readable messages
+│   │   ├── config.ts      # NEXT_PUBLIC_DEMO_API_URL
+│   │   ├── hmac.ts        # HMAC-SHA256 request signing (requires secure context)
+│   │   └── session.ts     # sessionStorage helpers for CSRF token and credentials
+│   ├── register/
+│   ├── login/
+│   ├── 2fa/
+│   ├── api_keys/
+│   └── playground/
+├── globals.css
+├── layout.tsx
+└── page.tsx           # Landing page
+```
