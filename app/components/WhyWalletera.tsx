@@ -2,38 +2,28 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Zap, Shield, Globe, Plug, Activity, Clock } from "lucide-react";
+import { Globe, Activity, Shield, Clock } from "lucide-react";
 
-const reasons = [
-  {
-    icon: Clock,
-    title: "Don't start from scratch",
-    desc: "Skip months of foundational work. Walletera comes with event sourcing, CQRS, message brokering, and payment workflows already wired together.",
-  },
-  {
-    icon: Shield,
-    title: "Production-ready from day one",
-    desc: "Built with real-world failure modes in mind. Dead letter queues, retries, idempotency, and observability are part of the foundation, not afterthoughts.",
-  },
+const differentiators = [
   {
     icon: Globe,
-    title: "Deploy anywhere",
-    desc: "No cloud lock-in. Run it on AWS, GCP, Azure, your own infrastructure, or locally. Kubernetes-native with Docker Compose for development.",
-  },
-  {
-    icon: Plug,
-    title: "Extend quickly",
-    desc: "Adding a new payment gateway means implementing a defined interface and wiring it up. No changes to core logic required.",
+    title: "Cloud-agnostic",
+    desc: "Runs on AWS, GCP, Azure, or any Kubernetes provider. No lock-in.",
   },
   {
     icon: Activity,
-    title: "Designed for scale",
-    desc: "Event-driven architecture with EventStoreDB and RabbitMQ means the system scales horizontally as your volume grows.",
+    title: "Built to scale",
+    desc: "Microservices architecture with CQRS and event sourcing. Scales horizontally as your volume grows.",
   },
   {
-    icon: Zap,
-    title: "Fast iteration",
-    desc: "Open source and modular. Own the code, fork it, adapt it. Ship faster because the hard parts are already solved.",
+    icon: Shield,
+    title: "High availability",
+    desc: "Critical components (KurrentDB, RabbitMQ, MySQL) deployed in cluster mode. Designed to stay up.",
+  },
+  {
+    icon: Clock,
+    title: "Full auditability",
+    desc: "Every state change is an event. Nothing is overwritten. Full history, always replayable.",
   },
 ];
 
@@ -43,7 +33,7 @@ export default function WhyWalletera() {
 
   return (
     <section
-      id="why-walletera"
+      id="differentiators"
       className="py-24 px-6 bg-neutral-50 dark:bg-neutral-900/40 border-t border-neutral-100 dark:border-neutral-900"
     >
       <div className="max-w-6xl mx-auto" ref={ref}>
@@ -53,16 +43,13 @@ export default function WhyWalletera() {
           transition={{ duration: 0.5 }}
           className="mb-14 text-center"
         >
-          <p className="text-xs font-medium uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-4">
-            Why Walletera
-          </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">
-            Built around how payments actually work
+            Built to run in production from day one
           </h2>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reasons.map((item, i) => (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {differentiators.map((item, i) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 20 }}

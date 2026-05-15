@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, GitFork } from "lucide-react";
-import PaymentFlowAnimation from "./PaymentFlowAnimation";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -49,9 +48,7 @@ export default function Hero() {
           animate="show"
           className="text-5xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[1.08] text-neutral-900 dark:text-neutral-50 mb-6"
         >
-          Stop rebuilding
-          <br />
-          <span className="text-neutral-400 dark:text-neutral-500">payments from scratch</span>
+          Stop rebuilding payments from scratch
         </motion.h1>
 
         <motion.p
@@ -61,8 +58,7 @@ export default function Hero() {
           animate="show"
           className="text-lg sm:text-xl text-neutral-500 dark:text-neutral-400 leading-relaxed max-w-2xl mx-auto mb-10"
         >
-          Walletera gives you a production-ready foundation to build, extend, and operate
-          payment systems—without months of trial and error.
+          Walletera is a production-grade payment platform you can deploy, integrate, and extend — available as a managed service or self-hosted.
         </motion.p>
 
         <motion.div
@@ -83,7 +79,7 @@ export default function Hero() {
             href="mailto:federicoamoya@gmail.com?subject=Walletera%20conversation"
             className="group flex items-center gap-2 px-5 py-2.5 rounded-lg bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-medium hover:bg-neutral-700 dark:hover:bg-neutral-100 transition-colors"
           >
-            Start a conversation
+            Get in touch
           </a>
           <a
             href="https://github.com/walletera"
@@ -96,26 +92,7 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        <motion.p
-          custom={4}
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          className="text-xs text-neutral-400 dark:text-neutral-600"
-        >
-          Open source · Cloud-agnostic · Built for high availability
-        </motion.p>
 
-        {/* Animation panel */}
-        <motion.div
-          custom={5}
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          className="mt-16 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/60 backdrop-blur-sm p-6 mx-auto max-w-xl"
-        >
-          <PaymentFlowAnimation />
-        </motion.div>
       </div>
     </section>
   );

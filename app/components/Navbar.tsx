@@ -47,13 +47,17 @@ export default function Navbar() {
         </a>
 
         <nav className="hidden md:flex items-center gap-8">
-          {["What is it", "Why Walletera", "Capabilities", "How it works"].map((item) => (
+          {[
+            { label: "What is it", href: "#what-is-it" },
+            { label: "Differentiators", href: "#differentiators" },
+            { label: "Roadmap", href: "#roadmap" },
+          ].map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z-]/g, "")}`}
+              key={item.label}
+              href={item.href}
               className="text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
             >
-              {item}
+              {item.label}
             </a>
           ))}
         </nav>

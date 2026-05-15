@@ -21,18 +21,15 @@ export default function WhatIs() {
               What is Walletera
             </p>
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50 mb-6 leading-tight">
-              A foundation you build on.
-              <br />
-              <span className="text-neutral-400 dark:text-neutral-500">Not a plug-and-play product.</span>
+              A platform built for how payments actually work.
             </h2>
             <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed text-base mb-6">
-              Walletera is an open-source Payments-as-a-Service platform. It gives engineers a
-              modular, production-ready starting point for building payment systems—covering
-              workflows, wallets, transaction processing, and external integrations.
+              Walletera is an open-source Payments-as-a-Service platform. It handles payment
+              lifecycle, gateway integrations, and transaction processing — available as a managed
+              service or self-hosted, depending on what works for your team.
             </p>
             <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed text-base">
-              It&apos;s not a hosted service you subscribe to. It&apos;s a platform you own and extend, designed
-              to save you months of foundational work so you can focus on what makes your product unique.
+              It&apos;s already running. Try the demo and interact with a live instance deployed on the cloud.
             </p>
           </motion.div>
 
@@ -40,26 +37,15 @@ export default function WhatIs() {
             initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="grid grid-cols-2 gap-3"
+            className="flex items-center justify-center"
           >
-            {[
-              { label: "Cloud-agnostic", desc: "Deploy on any cloud or on-premise" },
-              { label: "High availability", desc: "Designed for production from day one" },
-              { label: "Event-driven", desc: "Async, resilient, and scalable by default" },
-              { label: "Extensible", desc: "Add new payment gateways in hours, not weeks" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="p-4 rounded-lg border border-neutral-100 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900"
-              >
-                <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100 mb-1">
-                  {item.label}
-                </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-500 leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
+            <a
+              href="/demo"
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-violet-600 text-white text-sm font-medium hover:bg-violet-500 transition-colors"
+            >
+              Try the demo
+              <span className="group-hover:translate-x-0.5 transition-transform inline-block">→</span>
+            </a>
           </motion.div>
         </div>
       </div>

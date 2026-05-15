@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { listApiKeys, createApiKey, ApiError, type ApiKey } from "../lib/api";
+import { parseBarongError } from "../lib/barong-errors";
 import { session } from "../lib/session";
 
 function CopyButton({ value }: { value: string }) {
@@ -96,9 +97,9 @@ function GenerateForm({ onCreated }: { onCreated: (k: ApiKey) => void }) {
       if (err instanceof ApiError) {
         if (err.status === 401) { router.push("/demo/login"); return; }
         if (err.status === 400) { router.push("/demo/2fa"); return; }
-        setError("Failed to create API key. Please try again.");
+        setError(parseBarongError(err.body, err.status));
       } else {
-        setError("Could not reach the demo API. Check the base URL.");
+        setError("Could not reach the demo API.");
       }
     } finally {
       setLoading(false);
@@ -190,9 +191,9 @@ export default function ApiKeysPage() {
       .catch((err) => {
         if (err instanceof ApiError) {
           if (err.status === 401) { router.push("/demo/login"); return; }
-          setLoadError("Failed to load API keys. Please try again.");
+          setLoadError(parseBarongError(err.body, err.status));
         } else {
-          setLoadError("Could not reach the demo API. Check the base URL.");
+          setLoadError("Could not reach the demo API.");
         }
       });
   }, [router]);

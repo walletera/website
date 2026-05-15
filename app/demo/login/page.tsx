@@ -39,12 +39,7 @@ export default function LoginPage() {
       }
     } catch (err) {
       if (err instanceof ApiError) {
-        setError(
-          parseBarongError(err.body) ??
-            (err.status === 404
-              ? "No account found with that email."
-              : "Login failed. Check your credentials and try again.")
-        );
+        setError(parseBarongError(err.body, err.status));
       } else {
         setError("Could not reach the demo API. Check the base URL.");
       }

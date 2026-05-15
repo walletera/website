@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { generateQrCode, enableOtp, ApiError } from "../lib/api";
+import { parseBarongError } from "../lib/barong-errors";
 
 export default function TwoFAPage() {
   const router = useRouter();
@@ -25,9 +26,9 @@ export default function TwoFAPage() {
             router.push("/demo/login");
             return;
           }
-          setLoadError("Failed to generate QR code. Please try again.");
+          setLoadError(parseBarongError(err.body, err.status));
         } else {
-          setLoadError("Could not reach the demo API. Check the base URL.");
+          setLoadError("Could not reach the demo API.");
         }
       });
   }, [router]);
@@ -41,13 +42,9 @@ export default function TwoFAPage() {
       router.push("/demo/api_keys");
     } catch (err) {
       if (err instanceof ApiError) {
-        setEnableError(
-          err.status === 400
-            ? "Invalid or missing code. Try again."
-            : "Failed to enable 2FA. Please try again."
-        );
+        setEnableError(parseBarongError(err.body, err.status));
       } else {
-        setEnableError("Could not reach the demo API. Check the base URL.");
+        setEnableError("Could not reach the demo API.");
       }
     } finally {
       setSubmitting(false);

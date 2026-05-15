@@ -23,12 +23,7 @@ export default function RegisterPage() {
       router.push("/demo/login?from=register");
     } catch (err) {
       if (err instanceof ApiError) {
-        setError(
-          parseBarongError(err.body) ??
-            (err.status === 422
-              ? "Validation failed. Check your inputs and try again."
-              : "Registration failed. Please try again.")
-        );
+        setError(parseBarongError(err.body, err.status));
       } else {
         setError("Could not reach the demo API. Check the base URL.");
       }
